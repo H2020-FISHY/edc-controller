@@ -1,0 +1,42 @@
+
+# 1 - Upload HSPL file named "hspl_file.xml"
+
+curl -i -X POST -F file=@hspl_file.xml http://localhost:5000/upload_hspl
+
+# Response:
+# Just some HTML redirection stuff if successfully uploaded.
+
+# 2 - Get possible NSF configurations for policy refinement:
+
+# Args:
+# - Name of the uploaded policy file as cookie
+
+curl -i --cookie "policy_filename=fishy_hspl.xml" -X GET http://localhost:5000/refinement_no_gui
+
+# Response:
+# A JSON dictionary with HSPL as keys and a list of possible configuration as corresponding values.
+# Each configuration consists in a list of strings, representing a firewall for example.
+# Response example:
+# {"hspl1":[["firewall-1"],["firewall-2","firewall-HP","firewall-1"],["firewall-2","firewall-HP","firewall-1"]]}
+
+# 3 - Execute refinement of the uploaded file with the chosen NSF configuration:
+
+# Args:
+# - Name of the uploaded policy file as cookie
+# - JSON object containing for each hspl the chosen configuration
+
+curl -X POST --cookie "policy_filename=hspl_file.xml" -H "Content-Type: application/json" -d '{"hspl1": ["firewall-HP", "firewall-1"]}' http://localhost:5000/refinement_no_gui
+
+# Response:
+# A JSON dict with the output folders as keys and lists as values. The lists contain the names of the produced output files.
+# Response example:
+# {"fishy_hspl_1666080055":["firewall-HP_IpTables_RuleInstance.xml","firewall-1_IpTables_RuleInstance.xml"]}
+
+# 4 - Get the output files:
+
+curl -i -X GET http://localhost:5000/result/fishy_hspl_1666080055/firewall-HP_IpTables_RuleInstance.xml
+curl -i -X GET http://localhost:5000/result/fishy_hspl_1666080055/firewall-1_IpTables_RuleInstance.xml
+
+# For accessing the refinement engine web interface and REST APIs hosted on another machine use ssh remote port forwarding.
+# It's enough to just forward the 5000 port, which corresponds to the refinement-engine APIs. The NSF Catalogue doesn't need to be forwarded.
+ssh -L 8080:localhost:5000 server_machine -NT

@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  refinement:
+    build: .
+    environment:
+      - NSF_catalogue_host=http://catalogue:8984
+    ports:
+      - "5000:5000"
+
+  catalogue:
+    image: nsfcat:latest

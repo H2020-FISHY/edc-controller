@@ -1,0 +1,4 @@
+ip xfrm state add proto udp dport 53 auth "hmac(sha256)" 3ad07db13d92e633e11f43b308d1e04f8c13793e spi 0xf6f2e2a8 proto ah dst 0.0.0.0/0 src 10.3.3.24 
+ip xfrm state add proto udp auth "hmac(sha256)" 3ad07db13d92e633e11f43b308d1e04f8c13793e spi 0xf6f2e2a8 proto ah sport 53 dst 10.3.3.24 src 0.0.0.0/0 
+ip xfrm policy add proto udp spi 0xf6f2e2a8 proto ah sport 53 dst 10.3.3.24 src 0.0.0.0/0 mode transport dir in tmpl 
+ip xfrm policy add proto udp spi 0xf6f2e2a8 proto ah mode transport tmpl dir out dport 53 dst 0.0.0.0/0 src 10.3.3.24 

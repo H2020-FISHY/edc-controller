@@ -1,0 +1,24 @@
+<hspl-list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://fishy-project.eu/hspl"
+           xsi:schemaLocation="http://fishy-project.eu/hspl hspl.xsd">
+        <hspl id="hspl1">
+            <subject>Bob</subject>
+            <action>is authorized to access</action>
+            <object>Internet traffic</object>
+            <optionalField>
+                <optionType>time period</optionType>
+                <optionValue>18:30 20:00</optionValue>
+            </optionalField>
+        </hspl>
+
+        <hspl id="hspl2">
+            <subject>Alice</subject>
+            <action>protect integrity</action>
+            <object>Bob</object>
+        </hspl>
+
+        <hspl id="hspl3">
+            <subject>Malicious_User1</subject>
+            <action>is not authorized to access</action>
+            <object>Alice</object>
+        </hspl>
+</hspl-list>

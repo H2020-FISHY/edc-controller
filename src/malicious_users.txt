@@ -1,0 +1,13 @@
+{
+'Malicious_User1': {'IP': '192.168.0.0/16'},
+'Malicious_User2': {'IP': '1.2.3.4',
+    'WID': '0x38fE4036a3cB5fF2C3f4bF4c5D400f6c57016Dd0',
+    },
+'Malicious_User3': {'IP': '192.168.0.0/16',
+    'WID': '0x4O80aEvsmqoI2tPKwClmrEY33yU79QVpdPn1ONFa',
+    'DID': '0dJsYFQRP2PjEcitqDaGfO'
+    },
+'Malicious_User4': {
+    'WID': '0x68fW7436aQcB5fF4C3f4bF4cAD420f6757016Dd1',
+    },
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <title>Refinement engine</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+
+  <ul>
+    {% for result in result_files %}
+    <li>
+      <a href="{{ url_for('get_result', dirname=result) }}">{{ result }}</a>
+    </li>
+
+    {% endfor %}
+  </ul>
+
+</body>
+
+</html>

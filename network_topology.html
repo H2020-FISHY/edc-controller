@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": 0, "label": "Firewall1", "shape": "dot"}, {"id": 1, "label": "Subnet1.1", "shape": "dot"}, {"id": 2, "label": "SubnetDMZ", "shape": "dot"}, {"id": 3, "label": "SubnetDecoyDMZ", "shape": "dot"}, {"id": 4, "label": "Firewall2", "shape": "dot"}, {"id": 5, "label": "Internet", "shape": "dot"}, {"id": 6, "label": "SubnetAway", "shape": "dot"}, {"id": 7, "label": "Subnet2.1", "shape": "dot"}, {"id": 8, "label": "Subnet2.2", "shape": "dot"}, {"id": 9, "label": "FirewallHP", "shape": "dot"}, {"id": 10, "label": "VPNgateway", "shape": "dot"}, {"id": 11, "label": "SubnetHP", "shape": "dot"}, {"id": 12, "label": "Firewall3", "shape": "dot"}, {"id": 13, "label": "Subnet3.1", "shape": "dot"}, {"id": 14, "label": "Subnet3.2", "shape": "dot"}, {"id": 15, "label": "Subnet3.3", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": 0, "to": 1}, {"from": 0, "to": 2}, {"from": 0, "to": 3}, {"from": 0, "to": 4}, {"from": 0, "to": 5}, {"from": 5, "to": 6}, {"from": 4, "to": 7}, {"from": 4, "to": 8}, {"from": 4, "to": 9}, {"from": 4, "to": 10}, {"from": 9, "to": 11}, {"from": 10, "to": 12}, {"from": 12, "to": 13}, {"from": 12, "to": 14}, {"from": 12, "to": 15}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"color": {"highlight": {"background": "rgba(233,232,255,1)"}}, "font": {"color": "rgba(0,0,0,1)", "size": 18}, "scaling": {"max": 178}}, "edges": {"color": {"inherit": true}, "smooth": false}, "physics": {"minVelocity": 0.75}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

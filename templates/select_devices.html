@@ -1,0 +1,110 @@
+<!doctype html>
+<title>Select devices to configure</title>
+
+
+<h1>Select devices to configure</h1>
+
+<p style="color: red;" id="error"></p>
+
+<form method=post id="form_devices">
+    {% for hspl, paths in list_val.items() %}
+    <h3>{{ hspl }}</h3>
+    <ul id="{{ hspl }}">
+        {% for path_i in range(paths| length) %}
+        <li>
+            {% for device in paths[path_i] %}
+
+            <label for="{{ hspl ~ '_' ~ device ~ '_' ~ path_i }}">
+                <input type="checkbox" id="{{ hspl ~ '_' ~ device ~ '_' ~ path_i }}" data-hsplid="{{ hspl }}"
+                    value="{{ device }}">
+                {{ device }}
+            </label>
+
+            {% endfor %}
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    <br />
+    <button type=submit>Submit</button>
+</form>
+
+<script>
+    function set_all_similar_checkbox(event) {
+        const target = event.target
+        const hsplid = target.dataset.hsplid
+        const hspldevicelist = document.getElementById(hsplid)
+        for (const c of hspldevicelist.getElementsByTagName('input')) {
+            if (c.value == target.value) {
+                c.checked = target.checked
+            }
+        }
+    }
+
+    for (const checkbox of document.getElementsByTagName('input')) {
+        checkbox.addEventListener('click', set_all_similar_checkbox)
+    }
+
+
+    async function submit_devices(event) {
+        // avoid standard html submission
+        event.preventDefault()
+
+        // clear error if present
+        document.getElementById('error').innerText = ''
+
+        let selected_devices = {}
+
+        const form = event.target
+        for (const ul of form.getElementsByTagName('ul')) {
+            const hsplid = ul.id
+            let hspl_devices = new Set()
+
+            for (const li of ul.getElementsByTagName('li')) {
+                const devices = Array.from(li.getElementsByTagName('input')).filter(i => i.checked).map(i => i.value)
+                if (devices.length === 0) {
+                    alert('Select at least one device for each path')
+                    return
+                }
+                for (const dev of devices) {
+                    hspl_devices.add(dev)
+                }
+            }
+
+            selected_devices[hsplid] = Array.from(hspl_devices)
+        }
+
+        try {
+            const r = await fetch('/refinement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(selected_devices)
+            })
+
+            if (r.status !== 200) {
+                document.getElementById('error').innerText = 'Something went wrong'
+                return
+            }
+
+
+            j = await r.json()
+
+            if (!j.dirname) {
+                document.getElementById('error').innerText = 'Something is wrong in the server response'
+                return
+            }
+
+            window.location.assign('/result/' + j.dirname)
+            return
+        } catch (error) {
+            document.getElementById('error').innerText = 'Something went wrong'
+            return
+        }
+    }
+
+    const form = document.getElementById('form_devices')
+    form.addEventListener('submit', submit_devices)
+</script>

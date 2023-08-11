@@ -1,0 +1,69 @@
+<!doctype html>
+<title>Refinement engine</title>
+<h1>Refinement engine</h1>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .alert {
+      padding: 20px;
+      background-color: #bfbfbf;
+      color: black;
+    }
+
+    .error {
+      padding: 20px;
+      background-color: #ed0c13;
+      color: black;
+    }
+
+    .closebtn {
+      margin-left: 15px;
+      color: black;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .closebtn:hover {
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  {% for mesg in get_flashed_messages() %}
+  {% if 'ERROR' in mesg %}
+  <div class="error">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{ mesg }}
+  </div>
+  <br />
+  {% else %}
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{ mesg }}
+  </div>
+  <br />
+  {% endif %}
+  {% endfor %}
+
+  <a href="/upload_hspl"><button>Upload HSPL policy</button></a>
+  <a href="/upload_database"><button>Upload company database file</button></a>
+  <a href="/select_hspl"><button>Select HSPL policy</button></a>
+  <a href="/result"><button>Check results</button></a>
+
+  <br />
+  <br />
+  {% if selected_policy %}
+  <span>You are working on the policy "{{ selected_policy }}", click <a href="/select_hspl">here</a> to change it</span>
+  <br />
+  <br />
+  <a href="/refinement"><button>Execute refinement with device selection</button></a>
+  {% endif %}
+
+
+</body>

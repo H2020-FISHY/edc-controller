@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hspl-list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://fishy-project.eu/hspl"
+           xsi:schemaLocation="http://fishy-project.eu/hspl hspl.xsd">
+    <reaction id="reaction1">
+        <enabling-conditions>
+            <threshold>
+                <subject type="wallet_id">Malicious_User1</subject>
+                <value>1</value>
+                <period>1</period>
+                <time>Hour</time>
+            </threshold>
+        </enabling-conditions>
+
+        <hsplAAA id="hspl0">
+            <subject>Malicious_User1</subject>
+            <action>notify</action>
+            <object>supply_chain_operator</object>
+        </hsplAAA>
+
+        <hspla id="hspl1">
+            <subject>Malicious_User1</subject>
+            <action>is not authorized to access</action>
+            <object>Web App</object>
+        </hspla>
+
+        <hspl id="hspl2">
+            <subject>Bob</subject>
+            <action>is authorized to access</action>
+            <object>Internet traffic</object>
+            <optionalField>
+                <optionType>time period</optionType>
+                <optionValue>18:30 20:00</optionValue>
+            </optionalField>
+        </hspl>
+
+        <hspl id="hspl3">
+            <subject>Bob</subject>
+            <action>protect integrity</action>
+            <object>Alice</object>
+        </hspl>
+
+    </reaction>
+</hspl-list>
